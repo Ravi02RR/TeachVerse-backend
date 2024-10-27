@@ -29,9 +29,9 @@ app.use(express.static('public'));
 
 
 //======routes==================
-import usereRouter from '../routes/user.route.js';
+import userRouter from '../routes/user.route.js';
 
 
-app.use('/api/v1/user', usereRouter);
+app.use('/api/v1/user', userRouter);
 
 export { app };
