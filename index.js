@@ -3,10 +3,6 @@ import { dbconnection } from "./src/db/dbconnection.js";
 import { env } from "./src/config/env.js";
 
 
-
-
-
-
 dbconnection(env.Database.devlopement.URI).then(() => {
     app.listen(env.Port.devlopement, () => {
         console.log("Server is running on port 3000");

@@ -1,14 +1,15 @@
-import express from 'express';
 import dotenv from 'dotenv';
+import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
 //======configurations=========
-
+dotenv.config({
+    path: './.env'
+});
 
 //==============app=============
 const app = express();
-dotenv.config();
+
 
 
 const corsOptions = {

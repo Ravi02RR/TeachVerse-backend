@@ -3,11 +3,11 @@ import fs from "fs";
 import { env } from "../config/env.js";
 
 //==================configuring cloudinary==================
-const obj = {
-    cloud_name: env.cloudinary.cloudName,
-    api_key: env.cloudinary.apiKey,
-    api_secret: env.cloudinary.apiSecret,
-}
+// const obj = {
+//     cloud_name: env.cloudinary.cloudName,
+//     api_key: env.cloudinary.apiKey,
+//     api_secret: env.cloudinary.apiSecret,
+// }
 
 
 cloudinary.config({
@@ -20,14 +20,15 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localfile) => {
     try {
-        console.log(obj)
+        // console.log(obj)
         if (!localfile) {
             return null;
         }
         const result = await cloudinary.uploader.upload(localfile, {
             resource_type: "auto",
         });
-        console.log("file uploaded successfully");
+        console.log("file uploaded successfully", result);
+        fs.unlinkSync(localfile);
         return result;
     } catch (error) {
         fs.unlinkSync(localfile);

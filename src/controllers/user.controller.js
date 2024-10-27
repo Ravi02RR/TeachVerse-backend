@@ -22,7 +22,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(409, 'Email or username already exists');
     }
 
-    
+
     const avatarPath = req.files && req.files.avatar && req.files.avatar[0] ? req.files.avatar[0].path : null;
     const coverPath = req.files && req.files.cover && req.files.cover[0] ? req.files.cover[0].path : null;
 
@@ -46,13 +46,13 @@ export const registerUser = asyncHandler(async (req, res) => {
         email,
         username: username.toLowerCase(),
         password,
-        avatar: avatarlink.secure_url, 
+        avatar: avatarlink.secure_url,
         coverImage: coverlink?.secure_url || "",
     });
 
-    
+
     const createdUser = await userModel.findById(user._id).select("-password -refreshToken");
-    
+
     if (!createdUser) {
         throw new ApiError(500, 'Failed to create user');
     }
@@ -61,3 +61,32 @@ export const registerUser = asyncHandler(async (req, res) => {
         new ApiResponse(201, 'User created successfully', createdUser)
     );
 });
+
+
+export const loginUser = asyncHandler(
+    async (req, res) => {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            throw new ApiError(400, 'Username and password are required');
+        }
+
+        const user = await userModel.findOne({ username: username.toLowerCase() });
+
+        if (!user) {
+            throw new ApiError(404, 'User not found');
+        }
+
+        const isMatch = await user.comparePassword(password);
+
+        if (!isMatch) {
+            throw new ApiError(400, 'Invalid credentials');
+        }
+
+        const token = user.generateAccessToken();
+
+        return res.json(
+            new ApiResponse(200, 'Login successful', { token, user: user.toJSON() })
+        );
+    }
+)

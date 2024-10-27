@@ -83,7 +83,7 @@ userSchema.methods.generateAccessToken = function () {
         id: this._id, email: this.email,
         username: this.username,
         fullname: this.fullname
-    }, env.jwt.ACESS_TOKEN_SECRET, { expiresIn: env.jwt.ACESS_TOKEN_EXPIRES_IN });
+    }, env.jwt.ACESS_TOKEN_SECRET, { expiresIn: '7d' });
 }
 
 //========================Generate Refresh Token========================

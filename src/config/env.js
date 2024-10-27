@@ -18,7 +18,9 @@ export const env = {
     },
     cloudinary: {
         cloudName: process.env.CLOUD_NAME,
-        apiKey: process.env.cloudinary_API_key,
-        apiSecret: process.env.CLOUDINARY_URL
+        apiKey: process.env.CLOUDINARY_API_KEY,  
+        apiSecret: process.env.CLOUDINARY_API_SECRET 
     }
 }
+
+// console.log(env);
